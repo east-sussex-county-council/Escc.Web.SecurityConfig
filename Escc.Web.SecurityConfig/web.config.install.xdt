@@ -1,0 +1,108 @@
+﻿<?xml version="1.0"?>
+
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+
+  <!-- There's no command for "insert if missing" so this transform uses a workaround to ensure it'll work on any config file that has at least the root <configuration /> element.
+       The workaround is to insert the element you want regardless of whether it's already there, and if there are now two remove the second one. 
+       
+       The configSections element uses a similar but different workaround from http://stackoverflow.com/questions/18737022/xdt-transform-insertbefore-locator-condition-is-ignored
+       which ensures that it's the first child of <configuration />
+       -->
+
+  <configSections xdt:Transform="InsertBefore(/configuration/*[1])" />
+  <configSections xdt:Locator="XPath(/configuration/configSections[last()])">
+    <sectionGroup name="Escc.Web" xdt:Transform="Insert" />
+    <sectionGroup name="Escc.Web" xdt:Transform="Remove" xdt:Locator="XPath(/configuration/configSections/sectionGroup[@name='Escc.Web'][2])" />
+  </configSections>
+  <configSections xdt:Transform="RemoveAll" xdt:Locator="Condition(count(*)=0)" />
+
+  <configSections>
+    <sectionGroup name="Escc.Web" xdt:Locator="Match(name)">
+      <section name="ContentSecurityPolicies" type="System.Configuration.NameValueSectionHandler, System, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xdt:Transform="Insert" />
+      <section name="ContentSecurityPolicies" xdt:Transform="Remove" xdt:Locator="XPath(/configuration/configSections/sectionGroup[@name='Escc.Web']/section[@name='ContentSecurityPolicies'][2])" />
+    </sectionGroup>
+  </configSections>
+
+  <Escc.Web xdt:Transform="Insert" />
+  <Escc.Web xdt:Transform="Remove" xdt:Locator="XPath(/configuration/Escc.Web[2])" />
+
+  <Escc.Web>
+    <ContentSecurityPolicies xdt:Transform="Insert" />
+    <ContentSecurityPolicies xdt:Transform="Remove" xdt:Locator="XPath(/configuration/Escc.Web/ContentSecurityPolicies[2])" />
+    <ContentSecurityPolicies>
+      <!-- Apply locked-down content security policy to all pages by default. You will need to configure this for your site. -->
+      <add key="Default" xdt:Transform="Remove" xdt:Locator="Match(key)" />
+      <add key="Default" value="default-src 'none'" xdt:Transform="Insert" />
+    </ContentSecurityPolicies>
+  </Escc.Web>
+
+  <system.web xdt:Transform="Insert" />
+  <system.web xdt:Transform="Remove" xdt:Locator="XPath(/configuration/system.web[2])" />
+
+  <system.web>
+    <httpCookies xdt:Transform="Insert" />
+    <httpCookies xdt:Transform="Remove" xdt:Locator="XPath(/configuration/system.web/httpCookies[2])" />
+    <httpCookies httpOnlyCookies="true" requireSSL="true" xdt:Transform="SetAttributes(httpOnlyCookies,requireSSL)"  />
+
+    <!-- Remove the unnecessary header which identifies the ASP.NET version -->
+    <httpRuntime xdt:Transform="Insert" />
+    <httpRuntime xdt:Transform="Remove" xdt:Locator="XPath(/configuration/system.web/httpRuntime[2])" />
+    <httpRuntime enableVersionHeader="false" xdt:Transform="SetAttributes(enableVersionHeader)"  />
+  </system.web>
+
+  <system.webServer xdt:Transform="Insert" />
+  <system.webServer xdt:Transform="Remove" xdt:Locator="XPath(/configuration/system.webServer[2])" />
+  
+  <system.webServer>
+    <httpProtocol xdt:Transform="Insert" />
+    <httpProtocol xdt:Transform="Remove" xdt:Locator="XPath(/configuration/system.webServer/httpProtocol[2])" />
+    <modules xdt:Transform="Insert" />
+    <modules xdt:Transform="Remove" xdt:Locator="XPath(/configuration/system.webServer/modules[2])" />
+  </system.webServer>
+  
+  <system.webServer>
+    <httpProtocol>
+      <customHeaders xdt:Transform="Insert" />
+      <customHeaders xdt:Transform="Remove" xdt:Locator="XPath(/configuration/system.webServer/httpProtocol/customHeaders[2])" />
+    </httpProtocol>
+    <modules>
+      <add name="ContentSecurityPolicy" xdt:Transform="Remove" xdt:Locator="Match(name)" />
+      <add name="ContentSecurityPolicy" type="Escc.Web.ContentSecurityPolicyModule" xdt:Transform="Insert" />
+    </modules>
+  </system.webServer>
+
+  <system.webServer>
+    <httpProtocol>
+      <customHeaders>
+        <!-- Defend against clickjacking: Use SAMEORIGIN rather than DENY to allow the use of SVG images.
+             When Umbraco is in use, it requires framing for preview and template editing. -->
+        <remove name="X-Frame-Options" xdt:Transform="Remove" xdt:Locator="Match(name)"/>
+        <remove name="X-Frame-Options" xdt:Transform="Insert" />
+        <add name="X-Frame-Options" xdt:Transform="Remove" xdt:Locator="Match(name)" />
+        <add name="X-Frame-Options" value="SAMEORIGIN" xdt:Transform="Insert" />
+
+        <!-- Enable the cross-site scripting filter built into most browsers, blocking any requests detected as XSS. -->
+        <remove name="X-XSS-Protection" xdt:Transform="Remove" xdt:Locator="Match(name)"/>
+        <remove name="X-XSS-Protection" xdt:Transform="Insert" />
+        <add name="X-XSS-Protection" xdt:Transform="Remove" xdt:Locator="Match(name)" />
+        <add name="X-XSS-Protection" value="1; mode=block" xdt:Transform="Insert" />
+
+        <!-- Force browsers to stick with the declared MIME type rather than guessing it from the content. -->
+        <remove name="X-Content-Type-Options" xdt:Transform="Remove" xdt:Locator="Match(name)"/>
+        <remove name="X-Content-Type-Options" xdt:Transform="Insert" />
+        <add name="X-Content-Type-Options" xdt:Transform="Remove" xdt:Locator="Match(name)" />
+        <add name="X-Content-Type-Options" value="nosniff" xdt:Transform="Insert" />
+
+        <!-- Remove the unnecessary "Powered by: ASP.NET" header -->
+        <remove name="X-Powered-By" xdt:Transform="Remove" xdt:Locator="Match(name)" />
+        <remove name="X-Powered-By" xdt:Transform="Insert" />
+
+        <!-- Ensure TLS is used -->
+        <remove name="Strict-Transport-Security" xdt:Transform="Remove" xdt:Locator="Match(name)"/>
+        <remove name="Strict-Transport-Security" xdt:Transform="Insert" />
+        <add name="Strict-Transport-Security" xdt:Transform="Remove" xdt:Locator="Match(name)" />
+        <add name="Strict-Transport-Security" value="max-age=31536000" xdt:Transform="Insert" />
+      </customHeaders>
+    </httpProtocol>
+  </system.webServer>
+</configuration>

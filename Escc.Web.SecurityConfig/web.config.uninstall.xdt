@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <Escc.Web>
+    <ContentSecurityPolicies>
+      <add xdt:Transform="Remove" xdt:Locator="Condition(@key = 'Default' and @value = &quot;default-src 'none'&quot;)"/>
+    </ContentSecurityPolicies>
+    <ContentSecurityPolicies xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
+  </Escc.Web>
+
+  <Escc.Web xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
+
+  <system.web>
+    <httpCookies xdt:Transform="RemoveAttributes(httpOnlyCookies)" xdt:Locator="Condition(@httpOnlyCookies = 'true')" />
+    <httpCookies xdt:Transform="RemoveAttributes(requireSSL)" xdt:Locator="Condition(@requireSSL = 'true')" />
+    <httpCookies xdt:Transform="Remove" xdt:Locator="Condition(count(@*) = 0)" />
+
+    <httpRuntime xdt:Transform="RemoveAttributes(enableVersionHeader)" xdt:Locator="Condition(@enableVersionHeader = 'false')" />
+    <httpRuntime xdt:Transform="Remove" xdt:Locator="Condition(count(@*) = 0)" />
+  </system.web>
+  <system.web xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
+  
+  <system.webServer>
+    <httpProtocol>
+      <customHeaders>
+        <remove xdt:Transform="Remove" xdt:Locator="Condition(@name = 'X-Frame-Options' and count(/configuration/system.webServer/httpProtocol/customHeaders/add[@name = 'X-Frame-Options' and @value = 'SAMEORIGIN']) = 1)"/>
+        <add xdt:Transform="Remove" xdt:Locator="Condition(@name = 'X-Frame-Options' and @value = 'SAMEORIGIN')" />
+        <remove name="X-XSS-Protection" xdt:Transform="Remove" xdt:Locator="Condition(@name = 'X-XSS-Protection' and count(/configuration/system.webServer/httpProtocol/customHeaders/add[@name = 'X-XSS-Protection' and @value = '1; mode=block']) = 1)"/>
+        <add xdt:Transform="Remove" xdt:Locator="Condition(@name = 'X-XSS-Protection' and @value = '1; mode=block')" />
+        <remove name="X-Content-Type-Options" xdt:Transform="Remove" xdt:Locator="Condition(@name = 'X-Content-Type-Options' and count(/configuration/system.webServer/httpProtocol/customHeaders/add[@name = 'X-Content-Type-Options' and @value = 'nosniff']) = 1)"/>
+        <add xdt:Transform="Remove" xdt:Locator="Condition(@name = 'X-Content-Type-Options' and @value = 'nosniff')" />
+        <remove name="X-Powered-By" xdt:Transform="Remove" xdt:Locator="Match(name)" />
+        <remove name="Strict-Transport-Security" xdt:Transform="Remove" xdt:Locator="Condition(@name = 'Strict-Transport-Security' and count(/configuration/system.webServer/httpProtocol/customHeaders/add[@name = 'Strict-Transport-Security' and @value = 'max-age=31536000']) = 1)"/>
+        <add xdt:Transform="Remove" xdt:Locator="Condition(@name = 'Strict-Transport-Security' and @value = 'max-age=31536000')" />
+      </customHeaders>
+      <customHeaders xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
+    </httpProtocol>
+    <httpProtocol xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
+    <modules>
+      <add name="ContentSecurityPolicy" xdt:Transform="Remove" xdt:Locator="Match(name)" />
+    </modules>
+    <modules xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
+  </system.webServer>
+  <system.webServer xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
+
+  <configSections>
+    <sectionGroup name="Escc.Web" xdt:Locator="Match(name)">
+      <section xdt:Transform="Remove" xdt:Locator="Condition(@name='ContentSecurityPolicies' and not(/configuration/Escc.Web/ContentSecurityPolicies))" />
+      <section xdt:Transform="Remove" xdt:Locator="Condition(@name='ContentSecurityPolicySettings' and not(/configuration/Escc.Web/ContentSecurityPolicySettings))" />
+    </sectionGroup>
+    <sectionGroup xdt:Transform="Remove" xdt:Locator="Condition(@name='Escc.Web' and count(*) = 0 and not(/configuration/Escc.Web))" />
+  </configSections>
+  <configSections xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
+</configuration>
