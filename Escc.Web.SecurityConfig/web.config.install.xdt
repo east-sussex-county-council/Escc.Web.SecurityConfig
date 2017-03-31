@@ -102,6 +102,12 @@
         <remove name="Strict-Transport-Security" xdt:Transform="Insert" />
         <add name="Strict-Transport-Security" xdt:Transform="Remove" xdt:Locator="Match(name)" />
         <add name="Strict-Transport-Security" value="max-age=31536000" xdt:Transform="Insert" />
+
+        <!-- Allow referrer URL to be passed to sites on the same protocol, but not leaked from HTTPS to HTTP -->
+        <remove name="Referrer-Policy" xdt:Transform="Remove" xdt:Locator="Match(name)"/>
+        <remove name="Referrer-Policy" xdt:Transform="Insert" />
+        <add name="Referrer-Policy" xdt:Transform="Remove" xdt:Locator="Match(name)" />
+        <add name="Referrer-Policy" value="no-referrer-when-downgrade" xdt:Transform="Insert" />
       </customHeaders>
     </httpProtocol>
   </system.webServer>

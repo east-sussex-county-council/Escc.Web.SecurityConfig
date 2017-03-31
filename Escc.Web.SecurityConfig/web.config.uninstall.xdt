@@ -31,6 +31,8 @@
         <remove name="X-Powered-By" xdt:Transform="Remove" xdt:Locator="Match(name)" />
         <remove name="Strict-Transport-Security" xdt:Transform="Remove" xdt:Locator="Condition(@name = 'Strict-Transport-Security' and count(/configuration/system.webServer/httpProtocol/customHeaders/add[@name = 'Strict-Transport-Security' and @value = 'max-age=31536000']) = 1)"/>
         <add xdt:Transform="Remove" xdt:Locator="Condition(@name = 'Strict-Transport-Security' and @value = 'max-age=31536000')" />
+        <remove name="Referrer-Policy" xdt:Transform="Remove" xdt:Locator="Condition(@name = 'Referrer-Policy' and count(/configuration/system.webServer/httpProtocol/customHeaders/add[@name = 'Referrer-Policy' and @value = 'no-referrer-when-downgrade']) = 1)"/>
+        <add xdt:Transform="Remove" xdt:Locator="Condition(@name = 'Referrer-Policy' and @value = 'no-referrer-when-downgrade')" />
       </customHeaders>
       <customHeaders xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
     </httpProtocol>
