@@ -10,7 +10,3 @@ Configuration settings to apply client-side security protections to a website ru
 * **Locks down all client-side resources by default** using a content security policy, as a starting point for building a policy for your site. 
 
 Test your site with at [securityheaders.io](https://securityheaders.io/) to find out more about how these settings protect your site.
-
-## NuGet package
-
-The NuGet package is created using the [NuBuild](https://github.com/bspell1/NuBuild) extension for Visual Studio.
