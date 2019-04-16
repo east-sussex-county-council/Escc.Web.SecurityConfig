@@ -41,6 +41,11 @@
       <add name="ContentSecurityPolicy" xdt:Transform="Remove" xdt:Locator="Match(name)" />
     </modules>
     <modules xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
+    <security>
+      <requestFiltering xdt:Transform="RemoveAttributes(removeServerHeader)" xdt:Locator="Condition(@removeServerHeader = 'true')" />
+      <requestFiltering xdt:Transform="Remove" xdt:Locator="Condition(count(@*) = 0)" />
+    </security>
+    <security xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
   </system.webServer>
   <system.webServer xdt:Transform="Remove" xdt:Locator="Condition(count(*) = 0)" />
 

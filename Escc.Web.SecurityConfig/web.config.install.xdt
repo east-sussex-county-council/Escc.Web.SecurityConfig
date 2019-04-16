@@ -58,6 +58,8 @@
     <httpProtocol xdt:Transform="Remove" xdt:Locator="XPath(/configuration/system.webServer/httpProtocol[2])" />
     <modules xdt:Transform="Insert" />
     <modules xdt:Transform="Remove" xdt:Locator="XPath(/configuration/system.webServer/modules[2])" />
+    <security xdt:Transform="Insert" />
+    <security xdt:Transform="Remove" xdt:Locator="XPath(/configuration/system.webServer/security[2])" />
   </system.webServer>
   
   <system.webServer>
@@ -69,6 +71,11 @@
       <add name="ContentSecurityPolicy" xdt:Transform="Remove" xdt:Locator="Match(name)" />
       <add name="ContentSecurityPolicy" type="Escc.Web.ContentSecurityPolicyModule" xdt:Transform="Insert" />
     </modules>
+    <security>
+      <requestFiltering xdt:Transform="Insert" />
+      <requestFiltering xdt:Transform="Remove" xdt:Locator="XPath(/configuration/system.webServer/security/requestFiltering[2])" />
+      <requestFiltering removeServerHeader="true" xdt:Transform="SetAttributes(removeServerHeader)" />
+    </security>
   </system.webServer>
 
   <system.webServer>
